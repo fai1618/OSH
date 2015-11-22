@@ -109,11 +109,7 @@ AudioVisualize.prototype.mic = function () {//マイク使えるか確認
     //マイク使って良いか聞いてくる
     navigator.getUserMedia(audioObj, gotStream, errBack);
   } else {
-    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
-      navigator.mediaDevices.getUserMedia(audioObj, gotStream, errBack);
-    }else{
       alert('マイクデバイスがありません');
-    }
   }
 };
 //マイク確認用end
