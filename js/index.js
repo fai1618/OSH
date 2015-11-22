@@ -27,8 +27,33 @@ $(function(){
   }
 
   function getRandomColor(){
-    return '#'+Math.floor(Math.random() * 0xFFFFFF).toString(16);
+
+    var r = Math.round(Math.random()*(256-0))+0;
+    if(r/16 < 1){
+      console.log('r: '+r);
+      r = r.toString(16);
+      r = "0"+r;
+    }else{
+      r = r.toString(16);
+    }
+    var g = Math.round(Math.random()*(256-0))+0;
+    if(g/16 < 1){
+      g = g.toString(16);
+      g = "0"+g;
+    }else{
+      g = g.toString(16);
+    }
+    var b = Math.round(Math.random()*(256-0))+0;
+    if(b/16 < 1){
+      b = b.toString(16);
+      b = "0"+b;
+    }else{
+      b = b.toString(16);
+    }
+    console.log('#'+r+g+b);
+    return '#'+r+g+b;
   }
+
 
   CircleMaker = function (x, y, radius, color) {
     this.x = x;
@@ -46,6 +71,13 @@ $(function(){
 
   CircleMaker.prototype.lifeJudge = function(intervalId){
     if(--this.life > 0){
+      if(this.life <= 500){
+        if(this.life < 100){
+          this.color = this.colorFadeOut(9/10);
+        }else{
+          this.color = this.colorFadeOut(99/100);
+        }
+      }
     }else{
       if(this.life === 0){
         console.log('dead');
@@ -69,6 +101,34 @@ $(function(){
       this.y += this.velocity.y;
       this.radius += this.velocity.radius;
     }
+  };
+
+  //10進数に変換->int倍する->16進数に変換
+  //TODO:暗くするんじゃなくて、薄くする(それぞれの値を小さくするのではダメ)
+  CircleMaker.prototype.colorFadeOut = function(int){
+    var color = ''+this.color;
+    var r = color.slice(1,3);
+    var g = color.slice(3,5);
+    var b = color.slice(5,7);
+    r = parseInt(r,16).toString(10)*1;
+    g = parseInt(g,16).toString(10)*1;
+    b = parseInt(b,16).toString(10)*1;
+
+    r = Math.round(r*int).toString(16);
+    g = Math.round(g*int).toString(16);
+    b = Math.round(b*int).toString(16);
+
+    if(r.toString(16).length < 2){
+      r = "0"+r;
+    }
+    if(g.toString(16).length < 2){
+      g = "0"+g;
+    }
+    if(b.toString(16).length < 2){
+      b = "0"+b;
+    }
+    console.log('#'+r+g+b);
+    return '#'+r+g+b;
   };
 
 
@@ -100,9 +160,7 @@ $(function(){
 
     //TODO:これで不具合ないか確認(画面の大きさ変えた時に) <- 使うの一瞬だから大丈夫？
     maxX = $(canvasDom).width();
-    console.log(maxX);
     maxY = $(canvasDom).height();
-    console.log(maxY);
   });
 
 
