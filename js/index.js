@@ -28,29 +28,27 @@ $(function(){
 
   function getRandomColor(){
 
-    var r = Math.round(Math.random()*(256-0))+0;
+    var r = Math.round(Math.random()*(256-50))+50;
     if(r/16 < 1){
-      console.log('r: '+r);
       r = r.toString(16);
       r = "0"+r;
     }else{
       r = r.toString(16);
     }
-    var g = Math.round(Math.random()*(256-0))+0;
+    var g = Math.round(Math.random()*(256-50))+50;
     if(g/16 < 1){
       g = g.toString(16);
       g = "0"+g;
     }else{
       g = g.toString(16);
     }
-    var b = Math.round(Math.random()*(256-0))+0;
+    var b = Math.round(Math.random()*(256-50))+50;
     if(b/16 < 1){
       b = b.toString(16);
       b = "0"+b;
     }else{
       b = b.toString(16);
     }
-    console.log('#'+r+g+b);
     return '#'+r+g+b;
   }
 
@@ -66,16 +64,20 @@ $(function(){
       y:0,
       radius:1.0,
     };
-    this.life = Math.round(getRandom(50,500));
+    this.life = Math.round(getRandom(50,400));
   };
 
   CircleMaker.prototype.lifeJudge = function(intervalId){
     if(--this.life > 0){
       if(this.life <= 500){
         if(this.life < 100){
-          this.color = this.colorFadeOut(9/10);
+          if(this.life < 50){
+            this.color = this.colorFadeOut(9/10);
+          }else{
+            this.color = this.colorFadeOut(99/100);
+          }
         }else{
-          this.color = this.colorFadeOut(99/100);
+          this.color = this.colorFadeOut(999/1000);
         }
       }
     }else{
@@ -127,7 +129,6 @@ $(function(){
     if(b.toString(16).length < 2){
       b = "0"+b;
     }
-    console.log('#'+r+g+b);
     return '#'+r+g+b;
   };
 
