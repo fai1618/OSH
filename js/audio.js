@@ -1,5 +1,6 @@
   var AudioVisualize = function (settings) {//settings = {'frequencyValue','fftSize','smoothungTimeConstant'}
     'use strict';
+    var self = this;
     var spectrumCounts = 0,
         source,
         spectrums,
@@ -20,7 +21,6 @@
     this.analyser.connect(this.audioContext.destination);
 
     this.fileReader.onload = function () {
-      var self = this;
       console.log('onload');
       self.audioContext.decodeAudioData(self.fileReader.result, function (buffer) {
         if (source) {
@@ -57,12 +57,12 @@
         }
 
         if (spectrumCounts !== 0) {
-          this.ave = self.ave / spectrumCounts;//(spectrums.length-1);// this.ave/i と同
-          this.difference = this.ave - this.render.preAve;
+          this.ave = self.ave/spectrumCounts;//(spectrums.length-1);// this.ave/i と同
+          this.difference = this.ave-this.render.preAve;
           this.render.preAve = this.ave;
           if (this.ave_diffShowJudge) {
-            $('#difference').text('diffrrence: ' + this.difference);
-            $('#Ave').text('Ave: ' + this.ave);
+            $('#difference').text('diffrrence: '+this.difference);
+            $('#Ave').text('Ave: '+this.ave);
           }
         }
       }
