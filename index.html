@@ -7,24 +7,20 @@
   <script>if(!jQuery){document.write('<script src="js/jquery-2.11.1.min.js"><\/script>');}</script>
   <script src="js/CircleMaker.js"></script>
   <script src="js/func.js"></script>
-  <script src="js/canvas.js"></script>
   <script src="js/audio.js"></script>
+  <script src="js/canvas.js"></script>
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
   <script>
-      (function(){
-      'use strict';
       //audio.jsのインスタンス
-      var audio = new AudioVisualize(),
-          lineVisualizer;
+      var audio = new AudioVisualize();
 
       audio.addInputDom();//ファイル読み込みdom
       audio.addAveDifferenceDom();//数値表示dom
       audio.addChangeEvent();//ファイルが読み込まれたときのイベント
       audio.render();//音流す
       audio.mic();//マイク確認
-    })();
   </script>
 
 </body>
