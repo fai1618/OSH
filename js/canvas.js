@@ -35,7 +35,7 @@ $(function(){
       y:0,
       radius:1.0,
     };
-    this.life = Math.round(getRandom(50,400));
+    this.life = 100//Math.round(getRandom(50,400));
   };
 
   CircleMaker.prototype.lifeJudge = function(intervalId){
@@ -55,6 +55,7 @@ $(function(){
       if(this.life === 0){
         console.log('dead');
         this.color = bgColor;
+        //TODO:死んだcircleを削除
       }
     }
   };
@@ -136,6 +137,32 @@ $(function(){
   });
 
 
+  var createCircle = function(){
+//    if(!createCircle.x){
+//      createCircle.x=0;
+//    }
+//    if(!createCircle.speed){
+//      createCircle.speed=1;
+//    }
+//    if(createCircle.x >= maxX){
+//      createCircle.speed = -1;
+//    }else{
+//      if(createCircle.x <= 0){
+//        createCircle.speed=1;
+//      }
+//    }
+//    createCircle.x+=createCircle.speed;
+
+    var difference = audio.difference;
+    var ave = audio.ave;
+    if(difference > 5){
+      var x = getRandom(100,maxX-100);
+      var y = getRandom(100,maxY-100);
+      circles.push(new CircleMaker(/*createCircle.*/x, y, ave/5, getRandomColor()));
+    }
+  };
+
+
   render = function(){
     //canvasContext.clearRect(0, 0, canvasDom.width, canvasDom.height);
     canvasContext.fillStyle = bgColor;
@@ -146,6 +173,9 @@ $(function(){
       element.draw(element.x, element.y, element.radius, element.color);
       element.lifeJudge();
     });
+
+    createCircle();
+
 
     requestAnimationFrame(render);
   };
