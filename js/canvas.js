@@ -22,7 +22,7 @@ $(function(){
   var render;
   var CircleMaker;
 
-
+  var id = 0;
 
   CircleMaker = function (x, y, radius, color) {
     this.x = x;
@@ -36,6 +36,7 @@ $(function(){
       radius:1.0,
     };
     this.life = 100//Math.round(getRandom(50,400));
+    this.id = ++id;
   };
 
   CircleMaker.prototype.lifeJudge = function(intervalId){
@@ -55,7 +56,13 @@ $(function(){
       if(this.life === 0){
         console.log('dead');
         this.color = bgColor;
-        //TODO:死んだcircleを削除
+        //TODO:死んだcircleを削除 -> 正常動作か確認
+        for(var i=0;i<circles.length;i++){
+          if(circles[i].id === this.id){
+            circles.splice(i,1);
+            i--;
+          }
+        }
       }
     }
   };
@@ -125,7 +132,7 @@ $(function(){
 
 
   $(window).resize(function() {
-      console.log('resized');
+    console.log('resized');
     $(canvasDom).css("width",$(window).width());
     $(canvasDom).css("height",$(window).height()*0.99);
     $(canvasDom).attr("height",$(window).height());
