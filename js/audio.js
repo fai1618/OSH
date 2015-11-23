@@ -18,10 +18,11 @@
     this.analyser = this.audioContext.createAnalyser();
     this.analyser.fftSize = this.settings.fftSize || 1024;
     this.analyser.smoothingTimeConstant = this.settings.smoothingTimeConstant || 0.8;//defoult:0.8
-    this.analyser.connect(this.audioContext.destination);
 
     this.fileReader.onload = function () {
       console.log('onload');
+      self.analyser.connect(self.audioContext.destination);//入力された音出す
+      //TODO:マイク入力一時中止 -> 終わったらマイク確認
       self.audioContext.decodeAudioData(self.fileReader.result, function (buffer) {
         if (source) {
           source.stop();

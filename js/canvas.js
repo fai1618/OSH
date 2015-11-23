@@ -22,7 +22,7 @@ $(function(){
   var render;
   var CircleMaker;
 
-
+  var id = 0;
 
   CircleMaker = function (x, y, radius, color) {
     this.x = x;
@@ -35,7 +35,8 @@ $(function(){
       y:0,
       radius:1.0,
     };
-    this.life = Math.round(getRandom(50,400));
+    this.life = 100//Math.round(getRandom(50,400));
+    this.id = ++id;
   };
 
   CircleMaker.prototype.lifeJudge = function(intervalId){
@@ -55,6 +56,13 @@ $(function(){
       if(this.life === 0){
         console.log('dead');
         this.color = bgColor;
+        //TODO:死んだcircleを削除 -> 正常動作か確認
+        for(var i=0;i<circles.length;i++){
+          if(circles[i].id === this.id){
+            circles.splice(i,1);
+            i--;
+          }
+        }
       }
     }
   };
@@ -124,7 +132,7 @@ $(function(){
 
 
   $(window).resize(function() {
-      console.log('resized');
+    console.log('resized');
     $(canvasDom).css("width",$(window).width());
     $(canvasDom).css("height",$(window).height()*0.99);
     $(canvasDom).attr("height",$(window).height());
@@ -134,6 +142,32 @@ $(function(){
     maxX = $(canvasDom).width();
     maxY = $(canvasDom).height();
   });
+
+
+  var createCircle = function(){
+//    if(!createCircle.x){
+//      createCircle.x=0;
+//    }
+//    if(!createCircle.speed){
+//      createCircle.speed=1;
+//    }
+//    if(createCircle.x >= maxX){
+//      createCircle.speed = -1;
+//    }else{
+//      if(createCircle.x <= 0){
+//        createCircle.speed=1;
+//      }
+//    }
+//    createCircle.x+=createCircle.speed;
+
+    var difference = audio.difference;
+    var ave = audio.ave;
+    if(difference > 5){
+      var x = getRandom(100,maxX-100);
+      var y = getRandom(100,maxY-100);
+      circles.push(new CircleMaker(/*createCircle.*/x, y, ave/5, getRandomColor()));
+    }
+  };
 
 
   render = function(){
@@ -146,6 +180,9 @@ $(function(){
       element.draw(element.x, element.y, element.radius, element.color);
       element.lifeJudge();
     });
+
+    createCircle();
+
 
     requestAnimationFrame(render);
   };
