@@ -6,7 +6,7 @@ $(function(){
 
   var canvasDom = $("<canvas/>")[0];
   $(canvasDom).css("width",$(window).width());
-  $(canvasDom).css("height",$(window).height()*0.99);
+  $(canvasDom).css("height",$(window).height());
   $("body").append(canvasDom);
   var canvasContext = canvasDom.getContext('2d');
   $(canvasDom).attr("height",$(window).height());
@@ -145,21 +145,6 @@ $(function(){
 
 
   var createCircle = function(){
-//    if(!createCircle.x){
-//      createCircle.x=0;
-//    }
-//    if(!createCircle.speed){
-//      createCircle.speed=1;
-//    }
-//    if(createCircle.x >= maxX){
-//      createCircle.speed = -1;
-//    }else{
-//      if(createCircle.x <= 0){
-//        createCircle.speed=1;
-//      }
-//    }
-//    createCircle.x+=createCircle.speed;
-
     var difference = audio.difference;
     var ave = audio.ave;
     if(difference > 5){
@@ -174,6 +159,7 @@ $(function(){
     //canvasContext.clearRect(0, 0, canvasDom.width, canvasDom.height);
     canvasContext.fillStyle = bgColor;
     canvasContext.fillRect( 0, 0, canvasDom.width, canvasDom.height);
+
 
     circles.forEach(function(element){
       element.move();
