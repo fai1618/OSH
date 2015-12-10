@@ -134,7 +134,7 @@ $(function(){
   $(window).resize(function() {
     console.log('resized');
     $(canvasDom).css("width",$(window).width());
-    $(canvasDom).css("height",$(window).height()*0.99);
+    $(canvasDom).css("height",$(window).height());
     $(canvasDom).attr("height",$(window).height());
     $(canvasDom).attr("width",$(window).width());
 
